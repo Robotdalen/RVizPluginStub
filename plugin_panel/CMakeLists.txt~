@@ -1,0 +1,62 @@
+#cmake_minimum_required(VERSION 2.8.11)
+#
+#project(plugin_panel)
+#
+#find_package(catkin REQUIRED)
+#find_package(Qt4 REQUIRED COMPONENTS QtCore QtGui)
+#
+#catkin_package()
+#
+#include(${QT_USE_FILE})
+#include_directories(
+#  include/
+#  ${catkin_INCLUDE_DIRS} 
+##  /opt/ros/melodic/include
+#)
+#
+#qt4_wrap_cpp(QT_MOC include/plugin_panel.h)
+#set(SOURCES src/plugin_panel.cpp ${QT_MOC})
+#
+#add_library(${PROJECT_NAME} ${SOURCES})
+#
+#target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} ${catkin_LIBRARIES})
+
+cmake_minimum_required(VERSION 2.8.0)
+project(plugin_panel)
+
+find_package(catkin REQUIRED COMPONENTS roscpp sensor_msgs)
+
+include_directories(include ${catkin_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS})
+
+catkin_package()
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+
+#if(rviz_QT_VERSION VERSION_LESS "5")
+#  message(STATUS "Using Qt4 based on the rviz_QT_VERSION: ${rviz_QT_VERSION}")
+#  find_package(Qt4 ${rviz_QT_VERSION} EXACT REQUIRED QtCore QtGui)
+#  ## pull in all required include dirs, define QT_LIBRARIES, etc.
+#  include(${QT_USE_FILE})
+#else()
+#  message(STATUS "Using Qt5 based on the rviz_QT_VERSION: ${rviz_QT_VERSION}")
+#  find_package(Qt5 ${rviz_QT_VERSION} EXACT REQUIRED Core Widgets)
+#  ## make target_link_libraries(${QT_LIBRARIES}) pull in all required dependencies
+#  set(QT_LIBRARIES Qt5::Widgets)
+#endif()
+
+add_definitions(-DQT_NO_KEYWORDS)
+
+find_package(Qt4 REQUIRED COMPONENTS QtCore QtGui)
+include(${QT_USE_FILE})
+qt4_wrap_cpp(QT_MOC include/plugin_panel.h)
+
+
+set(SOURCES src/plugin_panel.cpp ${QT_MOC})
+#set(SOURCES src/plugin_panel.cpp)
+add_library(${PROJECT_NAME} ${SOURCES})
+
+target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} ${catkin_LIBRARIES})  
+
+# compiles but crashes rviz
