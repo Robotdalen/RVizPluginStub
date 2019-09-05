@@ -11,8 +11,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
-message(STATUS "Using Qt5 based on the rviz_QT_VERSION: ${rviz_QT_VERSION}")
-find_package(Qt5 ${rviz_QT_VERSION} EXACT REQUIRED Core Widgets)
+find_package(Qt5 REQUIRED Core Widgets)
 ## make target_link_libraries(${QT_LIBRARIES}) pull in all required dependencies
 set(QT_LIBRARIES Qt5::Widgets)
 
